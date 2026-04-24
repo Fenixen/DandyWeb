@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 370" width="300" height="370">
+  
+<defs>
+  <linearGradient id="g7" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#E4D0AF"/>
+    <stop offset="1" stop-color="#BFA479"/>
+  </linearGradient>
+  <filter id="g7-n" x="0" y="0">
+    <feTurbulence baseFrequency="0.9" numOctaves="2" result="t"/>
+    <feColorMatrix in="t" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.18 0"/>
+    <feComposite in2="SourceGraphic" operator="in"/>
+  </filter>
+</defs>
+  <path fill="url(#g7)" d="M55 80 L105 55 Q150 80 195 55 L245 80 L275 135 L235 155 L230 340 Q150 355 70 340 L65 155 L25 135 Z"/>
+  <path d="M55 80 L105 55 Q150 80 195 55 L245 80 L275 135 L235 155 L230 340 Q150 355 70 340 L65 155 L25 135 Z" fill="url(#g7)" filter="url(#g7-n)"/>
+  <g stroke="#8B6736" stroke-width="0.6" opacity="0.45" fill="none">
+    <path d="M75 170 Q150 185 225 170"/>
+    <path d="M75 200 Q150 215 225 200"/>
+    <path d="M75 230 Q150 245 225 230"/>
+    <path d="M75 260 Q150 275 225 260"/>
+    <path d="M75 290 Q150 305 225 290"/>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+services:
+  dandys-wear:
+    build: .
+    container_name: dandys-wear
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./data:/app/data
+      - ./public/uploads:/app/public/uploads
+    env_file: .env
+    environment:
+      - NODE_ENV=production

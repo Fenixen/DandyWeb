@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  description String
+  price       Int      // in halíře (CZK * 100)
+  imageUrl    String
+  posX        String   // e.g. "12%"
+  posY        String   // e.g. "22%"
+  posW        String   // e.g. "180px"
+  rotation    Float    @default(0)
+  stock       Int      @default(10)
+  sizes       String   @default("[\"S\",\"M\",\"L\"]")
+  createdAt   DateTime @default(now())
+
+  orderItems  OrderItem[]
+}
+
+model Order {
+  id              String   @id @default(cuid())
+  number          String   @unique
+  customerName    String
+  customerEmail   String
+  customerPhone   String
+  address         String
+  city            String
+  zip             String
+  shippingMethod  String   // "packeta" | "cod"
+  pickupPointId   String?
+  pickupPointName String?
+  paymentMethod   String   // "bank_transfer" | "cod"
+  subtotal        Int
+  discount        Int      @default(0)
+  shippingCost    Int      @default(0)
+  surcharge       Int      @default(0)
+  total           Int
+  status          String   @default("new") // new | paid | shipped | cancelled
+  variableSymbol  String
+  note            String?
+  createdAt       DateTime @default(now())
+
+  items           OrderItem[]
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  productId String
+  size      String
+  quantity  Int
+  unitPrice Int
+  title     String
+
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model DiscountCode {
+  id          String   @id @default(cuid())
+  code        String   @unique
+  type        String   // "percent" | "fixed"
+  value       Int      // percent (1-100) or halíře for fixed
+  minSubtotal Int      @default(0)
+  usageLimit  Int      @default(0) // 0 = unlimited
+  usedCount   Int      @default(0)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+}

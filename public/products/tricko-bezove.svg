@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 360" width="300" height="360">
+  
+<defs>
+  <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#F1E0C6"/>
+    <stop offset="1" stop-color="#E2C9A0"/>
+  </linearGradient>
+  <filter id="g1-n" x="0" y="0">
+    <feTurbulence baseFrequency="0.9" numOctaves="2" result="t"/>
+    <feColorMatrix in="t" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.18 0"/>
+    <feComposite in2="SourceGraphic" operator="in"/>
+  </filter>
+</defs>
+  <path fill="url(#g1)" d="M60 60 L110 40 Q150 65 190 40 L240 60 L270 110 L230 130 L225 320 Q150 335 75 320 L70 130 L30 110 Z"/>
+  <path d="M60 60 L110 40 Q150 65 190 40 L240 60 L270 110 L230 130 L225 320 Q150 335 75 320 L70 130 L30 110 Z" fill="url(#g1)" filter="url(#g1-n)"/>
+  <path d="M120 50 Q150 70 180 50" stroke="#B08A5A" stroke-width="1.2" fill="none" opacity="0.5"/>
+</svg>
