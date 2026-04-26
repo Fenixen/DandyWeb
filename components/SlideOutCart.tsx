@@ -91,7 +91,7 @@ export default function SlideOutCart() {
 
                 {items.map((it) => (
                   <div
-                    key={`${it.productId}-${it.size}`}
+                    key={`${it.productId}-${it.size}-${it.color}`}
                     className="flex gap-3 items-start p-3 bg-white/30 rounded-2xl border border-white/50"
                   >
                     <div className="w-16 h-16 bg-white/50 rounded-xl overflow-hidden flex items-center justify-center">
@@ -102,10 +102,21 @@ export default function SlideOutCart() {
                       <div className="flex justify-between gap-2">
                         <div className="min-w-0">
                           <div className="text-sm font-medium truncate">{it.title}</div>
-                          <div className="text-xs text-ink/60 mt-0.5">Velikost {it.size}</div>
+                          <div className="text-xs text-ink/60 mt-0.5">
+                            Velikost {it.size}
+                            {it.colorLabel && (
+                              <span className="ml-2 inline-flex items-center gap-1">
+                                <span
+                                  className="inline-block w-3 h-3 rounded-full border border-ink/20"
+                                  style={{ backgroundColor: it.color }}
+                                />
+                                {it.colorLabel}
+                              </span>
+                            )}
+                          </div>
                         </div>
                         <button
-                          onClick={() => removeItem(it.productId, it.size)}
+                          onClick={() => removeItem(it.productId, it.size, it.color)}
                           aria-label="Odebrat"
                           className="p-1.5 text-ink/50 hover:text-dusty-500"
                         >
@@ -115,7 +126,7 @@ export default function SlideOutCart() {
                       <div className="flex items-center justify-between mt-2">
                         <div className="flex items-center gap-2 bg-white/60 rounded-full p-0.5">
                           <button
-                            onClick={() => updateQuantity(it.productId, it.size, it.quantity - 1)}
+                            onClick={() => updateQuantity(it.productId, it.size, it.color, it.quantity - 1)}
                             aria-label="Snížit"
                             className="w-6 h-6 rounded-full hover:bg-white grid place-items-center"
                           >
@@ -123,7 +134,7 @@ export default function SlideOutCart() {
                           </button>
                           <span className="text-sm w-5 text-center">{it.quantity}</span>
                           <button
-                            onClick={() => updateQuantity(it.productId, it.size, it.quantity + 1)}
+                            onClick={() => updateQuantity(it.productId, it.size, it.color, it.quantity + 1)}
                             aria-label="Zvýšit"
                             className="w-6 h-6 rounded-full hover:bg-white grid place-items-center"
                           >
