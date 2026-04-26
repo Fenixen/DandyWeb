@@ -83,7 +83,7 @@ function OrdersTab() {
                 {new Date(o.createdAt).toLocaleString('cs-CZ')} · {o.customerName} · {o.customerEmail}
               </div>
               <div className="text-xs text-ink/60">{o.customerPhone} · {o.address}, {o.zip} {o.city}</div>
-              {o.pickupPointName && <div className="text-xs text-ink/60">Výdej: {o.pickupPointName}</div>}
+              {o.pickupPointName && <div className="text-xs text-ink/60">Výej: {o.pickupPointName}</div>}
             </div>
             <div className="text-right">
               <div className="font-medium">{formatCZK(o.total)}</div>
@@ -98,14 +98,26 @@ function OrdersTab() {
               >
                 <option value="new">Nová</option>
                 <option value="paid">Zaplaceno</option>
-                <option value="shipped">Odesláno</option>
+                <option value="shipped">Odesáno</option>
                 <option value="cancelled">Zrušeno</option>
               </select>
             </div>
           </div>
           <div className="mt-3 text-sm text-ink/70">
             {o.items.map((it: any) => (
-              <div key={it.id}>• {it.title} · {it.size} × {it.quantity} · {formatCZK(it.unitPrice * it.quantity)}</div>
+              <div key={it.id} className="flex items-center gap-2">
+                <span>• {it.title} · {it.size}</span>
+                {it.color && (
+                  <span className="inline-flex items-center gap-1">
+                    <span
+                      className="inline-block w-3 h-3 rounded-full border border-ink/20"
+                      style={{ backgroundColor: it.color.startsWith('#') ? it.color : undefined }}
+                    />
+                    <span className="text-xs text-ink/60">{it.color}</span>
+                  </span>
+                )}
+                <span>× {it.quantity} · {formatCZK(it.unitPrice * it.quantity)}</span>
+              </div>
             ))}
           </div>
         </div>
@@ -128,7 +140,11 @@ function ProductsTab() {
   useEffect(() => { load(); }, []);
 
   async function save(p: any) {
-    const payload = { ...p, sizes: Array.isArray(p.sizes) ? p.sizes : JSON.parse(p.sizes || '[]') };
+    const payload = {
+      ...p,
+      sizes: Array.isArray(p.sizes) ? p.sizes : JSON.parse(p.sizes || '[]'),
+      colors: Array.isArray(p.colors) ? p.colors : JSON.parse(p.colors || '[]'),
+    };
     const method = p.id ? 'PATCH' : 'POST';
     const res = await fetch(asset('/api/admin/products'), {
       method, headers: { 'Content-Type': 'application/json' },
@@ -152,7 +168,9 @@ function ProductsTab() {
       <button
         onClick={() => setEditing({
           slug: '', title: '', description: '', price: 0, imageUrl: '',
-          posX: '50%', posY: '50%', posW: '200px', rotation: 0, stock: 10, sizes: ['S', 'M', 'L'],
+          posX: '50%', posY: '50%', posW: '200px', rotation: 0, stock: 10,
+          sizes: ['S', 'M', 'L'],
+          colors: [],
         })}
         className="mb-4 px-5 py-2 rounded-full bg-ink text-beige-50 text-sm"
       >
@@ -168,8 +186,36 @@ function ProductsTab() {
               <div className="serif italic text-lg">{p.title}</div>
               <div className="text-xs text-ink/60">{p.slug} · {formatCZK(p.price)} · sklad {p.stock}</div>
               <div className="text-xs text-ink/50">pos {p.posX}/{p.posY} · w {p.posW} · rot {p.rotation}°</div>
+              {/* Color swatches preview */}
+              {(() => {
+                try {
+                  const cols = JSON.parse(p.colors || '[]');
+                  if (cols.length > 0) return (
+                    <div className="flex gap-1 mt-1">
+                      {cols.map((c: any) => (
+                        <span
+                          key={c.hex}
+                          title={c.label}
+                          className="w-4 h-4 rounded-full border border-ink/20"
+                          style={{ backgroundColor: c.hex }}
+                        />
+                      ))}
+                    </div>
+                  );
+                } catch {}
+                return null;
+              })()}
               <div className="flex gap-2 mt-2">
-                <button onClick={() => setEditing({ ...p, sizes: JSON.parse(p.sizes) })} className="text-xs px-3 py-1 rounded-full bg-white/60">Upravit</button>
+                <button
+                  onClick={() => setEditing({
+                    ...p,
+                    sizes: JSON.parse(p.sizes),
+                    colors: JSON.parse(p.colors || '[]'),
+                  })}
+                  className="text-xs px-3 py-1 rounded-full bg-white/60"
+                >
+                  Upravit
+                </button>
                 <button onClick={() => remove(p.id)} className="text-xs px-3 py-1 rounded-full bg-dusty-100 text-dusty-500">Smazat</button>
               </div>
             </div>
@@ -184,6 +230,24 @@ function ProductsTab() {
 
 function ProductEditor({ value, onClose, onSave }: { value: any; onClose: () => void; onSave: (p: any) => void }) {
   const [p, setP] = useState<any>(value);
+  const [newColorLabel, setNewColorLabel] = useState('');
+  const [newColorHex, setNewColorHex] = useState('#000000');
+
+  const colors: { label: string; hex: string }[] = Array.isArray(p.colors) ? p.colors : [];
+
+  function addColor() {
+    const label = newColorLabel.trim();
+    if (!label) return;
+    if (colors.find((c) => c.hex === newColorHex)) return;
+    setP({ ...p, colors: [...colors, { label, hex: newColorHex }] });
+    setNewColorLabel('');
+    setNewColorHex('#000000');
+  }
+
+  function removeColor(hex: string) {
+    setP({ ...p, colors: colors.filter((c) => c.hex !== hex) });
+  }
+
   const field = (k: string, label: string, type = 'text') => (
     <label className="block">
       <span className="block text-xs uppercase tracking-[0.14em] text-ink/60 mb-1">{label}</span>
@@ -195,6 +259,7 @@ function ProductEditor({ value, onClose, onSave }: { value: any; onClose: () => 
       />
     </label>
   );
+
   return (
     <div className="fixed inset-0 z-[80] bg-ink/40 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}>
       <div onClick={(e) => e.stopPropagation()} className="glass rounded-3xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
@@ -217,6 +282,58 @@ function ProductEditor({ value, onClose, onSave }: { value: any; onClose: () => 
               className="w-full px-3 py-2 rounded-xl bg-white/70 border border-white/60 text-sm"
             />
           </label>
+
+          {/* ---- Colors editor ---- */}
+          <div className="col-span-2">
+            <span className="block text-xs uppercase tracking-[0.14em] text-ink/60 mb-2">Barvy produktu</span>
+            <div className="flex flex-wrap gap-2 mb-3">
+              {colors.length === 0 && (
+                <span className="text-xs text-ink/40">Bez variant barev</span>
+              )}
+              {colors.map((c) => (
+                <div key={c.hex} className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/70 border border-white/60">
+                  <span className="w-4 h-4 rounded-full border border-ink/20 flex-shrink-0" style={{ backgroundColor: c.hex }} />
+                  <span className="text-xs">{c.label}</span>
+                  <button
+                    onClick={() => removeColor(c.hex)}
+                    className="text-ink/40 hover:text-ink/80 text-xs leading-none ml-0.5"
+                    title="Odstranit barvu"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+            <div className="flex items-end gap-2">
+              <label className="flex-1">
+                <span className="block text-xs text-ink/60 mb-1">Název barvy</span>
+                <input
+                  type="text"
+                  placeholder="např. Červená"
+                  value={newColorLabel}
+                  onChange={(e) => setNewColorLabel(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && addColor()}
+                  className="w-full px-3 py-2 rounded-xl bg-white/70 border border-white/60 text-sm"
+                />
+              </label>
+              <label>
+                <span className="block text-xs text-ink/60 mb-1">Barva</span>
+                <input
+                  type="color"
+                  value={newColorHex}
+                  onChange={(e) => setNewColorHex(e.target.value)}
+                  className="w-10 h-10 rounded-xl border border-white/60 cursor-pointer p-0.5 bg-white/70"
+                />
+              </label>
+              <button
+                onClick={addColor}
+                className="px-4 py-2 rounded-xl bg-ink text-beige-50 text-sm whitespace-nowrap"
+              >
+                + Přidat
+              </button>
+            </div>
+          </div>
+
           <label className="block col-span-2">
             <span className="block text-xs uppercase tracking-[0.14em] text-ink/60 mb-1">Popis</span>
             <textarea
