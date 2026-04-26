@@ -12,14 +12,14 @@ model Product {
   slug        String   @unique
   title       String
   description String
-  price       Int      // in halíře (CZK * 100)
+  price       Int      // in halire (CZK * 100)
   imageUrl    String
   posX        String   // e.g. "12%"
   posY        String   // e.g. "22%"
   posW        String   // e.g. "180px"
   rotation    Float    @default(0)
   stock       Int      @default(10)
-  sizes       String   @default("[\\"S\\",\\"M\\",\\"L\\"]")
+  sizes       String   @default("[\"S\",\"M\",\"L\"]")
   colors      String   @default("[]")
   createdAt   DateTime @default(now())
 
@@ -70,7 +70,7 @@ model DiscountCode {
   id          String   @id @default(cuid())
   code        String   @unique
   type        String   // "percent" | "fixed"
-  value       Int      // percent (1-100) or halíře for fixed
+  value       Int      // percent (1-100) or halire for fixed
   minSubtotal Int      @default(0)
   usageLimit  Int      @default(0) // 0 = unlimited
   usedCount   Int      @default(0)
