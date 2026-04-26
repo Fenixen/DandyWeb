@@ -18,11 +18,17 @@ export async function POST(req: NextRequest) {
 
   const token = await signToken({ sub: 'admin' });
   const res = NextResponse.json({ ok: true });
+
+  // secure: true only when accessed over HTTPS (HTTPS_ONLY env var set)
+  // For local Docker/HTTP deployments, secure must be false so the cookie
+  // is sent back by browsers on other devices on the local network.
+  const isSecure = process.env.HTTPS_ONLY === 'true';
+
   res.cookies.set(SESSION_COOKIE, token, {
     httpOnly: true,
     sameSite: 'lax',
     path: '/',
-    secure: process.env.NODE_ENV === 'production',
+    secure: isSecure,
     maxAge: 60 * 60 * 24 * 30,
   });
   return res;

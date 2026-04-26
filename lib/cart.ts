@@ -8,6 +8,8 @@ export type CartItem = {
   title: string;
   imageUrl: string;
   size: string;
+  color: string;       // hex string, prázdný řetězec = bez výběru barvy
+  colorLabel: string;  // čitelký název barvy, např. "Červená"
   quantity: number;
   unitPrice: number; // halíře
 };
@@ -24,8 +26,8 @@ type State = {
   open: boolean;
   discount: DiscountState;
   addItem: (item: CartItem) => void;
-  removeItem: (productId: string, size: string) => void;
-  updateQuantity: (productId: string, size: string, qty: number) => void;
+  removeItem: (productId: string, size: string, color: string) => void;
+  updateQuantity: (productId: string, size: string, color: string, qty: number) => void;
   setDiscount: (d: DiscountState) => void;
   clear: () => void;
   setOpen: (o: boolean) => void;
@@ -39,17 +41,25 @@ export const useCart = create<State>()(
       discount: null,
       addItem: (item) => {
         const items = [...get().items];
-        const i = items.findIndex((x) => x.productId === item.productId && x.size === item.size);
+        const i = items.findIndex(
+          (x) => x.productId === item.productId && x.size === item.size && x.color === item.color,
+        );
         if (i >= 0) items[i].quantity += item.quantity;
         else items.push(item);
         set({ items, open: true });
       },
-      removeItem: (productId, size) =>
-        set({ items: get().items.filter((x) => !(x.productId === productId && x.size === size)) }),
-      updateQuantity: (productId, size, qty) =>
+      removeItem: (productId, size, color) =>
+        set({
+          items: get().items.filter(
+            (x) => !(x.productId === productId && x.size === size && x.color === color),
+          ),
+        }),
+      updateQuantity: (productId, size, color, qty) =>
         set({
           items: get().items.map((x) =>
-            x.productId === productId && x.size === size ? { ...x, quantity: Math.max(1, qty) } : x,
+            x.productId === productId && x.size === size && x.color === color
+              ? { ...x, quantity: Math.max(1, qty) }
+              : x,
           ),
         }),
       setDiscount: (d) => set({ discount: d }),

@@ -19,7 +19,8 @@ model Product {
   posW        String   // e.g. "180px"
   rotation    Float    @default(0)
   stock       Int      @default(10)
-  sizes       String   @default("[\"S\",\"M\",\"L\"]")
+  sizes       String   @default("[\\"S\\",\\"M\\",\\"L\\"]")
+  colors      String   @default("[]")
   createdAt   DateTime @default(now())
 
   orderItems  OrderItem[]
@@ -56,6 +57,7 @@ model OrderItem {
   orderId   String
   productId String
   size      String
+  color     String  @default("")
   quantity  Int
   unitPrice Int
   title     String

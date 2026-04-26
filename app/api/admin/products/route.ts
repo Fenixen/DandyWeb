@@ -16,6 +16,12 @@ const Base = z.object({
   rotation: z.number().min(-45).max(45),
   stock: z.number().int().min(0).max(9999),
   sizes: z.array(z.string().min(1).max(10)).min(1).max(10),
+  colors: z.array(
+    z.object({
+      label: z.string().min(1).max(50),
+      hex: z.string().regex(/^#[0-9a-fA-F]{6}$/),
+    })
+  ).default([]),
 });
 
 export async function GET() {
@@ -27,7 +33,13 @@ export async function POST(req: NextRequest) {
   const parsed = Base.safeParse(await req.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: 'Neplatná data.', details: parsed.error.flatten() }, { status: 400 });
   const d = parsed.data;
-  const p = await prisma.product.create({ data: { ...d, sizes: JSON.stringify(d.sizes) } });
+  const p = await prisma.product.create({
+    data: {
+      ...d,
+      sizes: JSON.stringify(d.sizes),
+      colors: JSON.stringify(d.colors),
+    },
+  });
   return NextResponse.json({ product: p });
 }
 
@@ -36,9 +48,10 @@ const PatchSchema = Base.partial().extend({ id: z.string() });
 export async function PATCH(req: NextRequest) {
   const parsed = PatchSchema.safeParse(await req.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: 'Neplatná data.' }, { status: 400 });
-  const { id, sizes, ...rest } = parsed.data;
+  const { id, sizes, colors, ...rest } = parsed.data;
   const data: any = { ...rest };
   if (sizes) data.sizes = JSON.stringify(sizes);
+  if (colors !== undefined) data.colors = JSON.stringify(colors);
   const p = await prisma.product.update({ where: { id }, data });
   return NextResponse.json({ product: p });
 }

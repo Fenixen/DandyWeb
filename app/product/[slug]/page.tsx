@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
 import { asset } from '@/lib/basepath';
-import AddToCartPill from './AddToCartPill';
+import AddToCartPillWrapper from './AddToCartPillWrapper';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,17 +11,20 @@ export default async function ProductPage({ params }: { params: { slug: string }
   if (!product) notFound();
 
   const sizes: string[] = JSON.parse(product.sizes);
+  const colors: { label: string; hex: string }[] = JSON.parse(product.colors || '[]');
 
   return (
     <div className="relative pb-40">
-      {/* Hero image */}
+      {/* Hero image with color overlay */}
       <div className="flex flex-col items-center px-4">
-        <div className="w-full max-w-[720px] h-[60vh] md:h-[68vh] flex items-center justify-center">
+        <div className="w-full max-w-[720px] h-[60vh] md:h-[68vh] flex items-center justify-center relative">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
+            id="product-hero-img"
             src={asset(product.imageUrl)}
             alt={product.title}
-            className="max-h-full max-w-full object-contain drop-shadow-[0_30px_40px_rgba(120,60,50,0.22)]"
+            className="max-h-full max-w-full object-contain drop-shadow-[0_30px_40px_rgba(120,60,50,0.22)] transition-all duration-500"
+            style={{ filter: 'none' }}
           />
         </div>
 
@@ -40,8 +43,8 @@ export default async function ProductPage({ params }: { params: { slug: string }
         </article>
       </div>
 
-      {/* Floating bottom pill */}
-      <AddToCartPill
+      {/* Floating bottom pill — client wrapper handles color overlay */}
+      <AddToCartPillWrapper
         product={{
           id: product.id,
           slug: product.slug,
@@ -49,6 +52,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
           imageUrl: product.imageUrl,
           price: product.price,
           sizes,
+          colors,
         }}
       />
     </div>
