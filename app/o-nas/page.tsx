@@ -4,44 +4,52 @@ export default function ONas() {
   return (
     <article className="mx-auto max-w-[720px] px-6 py-12 md:py-20">
       <p className="text-xs uppercase tracking-[0.24em] text-ink/50 mb-6">O nás</p>
-      <h1 className="serif italic text-5xl md:text-6xl leading-[0.95] text-ink">
-        Značka inspirovaná.<br />
-        pejskem Dandy.
+      <h1 className="serif italic text-5xl md:text-5xl leading-[0.95] text-ink">
+        Nenosíte normální oblečení, nosíte příběh
       </h1>
 
       <div className="prose-dandy mt-10 text-ink/85 text-[17px]">
+        <h2>Začátek</h2>
         <p>
-          Dandy&apos;s Wear vzniklo v roce 2024. v malém pražském ateliéru, kde jsme
-          kreslili střihy na balicí papír a první trička žehlili v kuchyni.
-          Věřili jsme, že oblečení se dá dělat s péčí — jeden kus po druhém,
-          bez spěchu, bez sezón, bez kompromisů.
+          Za značkou <b>Dandy's Wear</b> se skrývá příběh, který je nám velmi blízký. Příběh jedné výjimečné fenky
+          jménem <b>Dandy</b>. Dandy se narodila v Českém Brodě, ale svůj život strávila na Brněnsku. Byla to dáma s osobností,
+          veselá, zvídavá a vždy připravená být u všeho jako první. Její energie, radost ze života a trocha té "psí rošťárny"
+          byly nakažlivé. Stala se nejen milovaným členem rodiny, ale také inspirací něčeho většího.
         </p>
 
-        <h2>Co děláme jinak</h2>
+        <h2>Jak to šlo dál</h2>
         <p>
-          Všechny naše kousky šijeme v malosériích v české dílně, se kterou
-          spolupracujeme dlouhodobě. Používáme přírodní a recyklované materiály —
-          bavlnu, len, vlnu. Žádné umělé směsi, žádná rychlá móda, žádné chemicky
-          upravené povrchy.
+          Během svého života čelila několika zdravotním výzvám, především virovým onemocněním. Vždy však bojovala statečně,
+          s noblesou sobě vlastní. Když jí bylo něco málo přes osm let, byla jí diagnostikována vážná nemoc. Přesto si uchovala
+          svůj charakter laskavý pohled, důvěru v lidi a oddanost. Nakonec ale nemoc zvítezila a Dandy nás ve věku devíti let
+          opustila.
         </p>
 
-        <h2>Proč béžová a cihla</h2>
+        <h2>Její duch však žije dál</h2>
         <p>
-          Protože jsou to barvy, které se nevyptávají. Doplňují, nepřeřvávají.
-          Naše paleta je inspirovaná barvami pražských fasád po dešti,
-          opotřebovaným papírem starých dopisů a teplem podzimního slunce.
+          Dandy se stala symbolem naší značky, ztělesněním elegance, síly a přirozené radosti ze života. <b>Dandy's Wear</b> je
+          poctou jejímu odkazu. Vytváříme oblečení, které nese podobné hodnoty: <b>čistý styl, kvalitu, nadčasovost a špetku
+            osobité noblesy
+          </b>. Naše kousky jsou navržené s důrazem na detail tak, aby se v nich každý cítil výjimečně, a přesto přirozeně.
+          Stejně jako <b>Dandy</b>.
+        </p>
+        <h2>Každý nákup pomáhá</h2>
+        <p>
+          <b>Buďte součástí něčeho velkého</b>
+          Dandy nás naučila mnohému, mimo jiné i tomu, jak důležité je neztrácet naději, i když život přináší těžké
+          chvíle.<br/>Proto jsme se rozhodli, že <b>každým nákupem přispíváte na výzkum léčby závažných onemocnění</b>,
+          která stále čekají na svá řešení.<b> Z Každé objednávky věnujeme 2% na podporu odborníků, kteří pracují na tom,
+            aby jednou mohli dát šanci na uzdravení těm, kteří ji nejvíce potřebují.
+          </b><br/>Děkujeme, že v tom jdete s námi. I malý krok může znamenat velkou změnu.
         </p>
 
-        <h2>Náš slib</h2>
-        <p>
-          Každý kus od nás vydrží roky. Pokud se něco pokazí, spravíme to.
-          Pokud vám nebude sedět velikost, vyměníme. A pokud máte otázku,
-          odpovíme osobně, ne z chatbota.
+        <p className="serif text-2xl mt-12">
+          Ať žijeme na planetě, kde tato zákeřná nemoc už není.
         </p>
 
-        <p className="serif italic text-2xl mt-12">
-          S úctou k detailu,<br />— tým Dandy&apos;s Wear
-        </p>
+        <h3>Odkaz na nadaci</h3>
+        <a href='https://worldwidecancerresearch.org' target="_blank">Worldwide cancer research</a>
+
       </div>
     </article>
   );
