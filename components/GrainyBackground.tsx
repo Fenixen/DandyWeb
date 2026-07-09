@@ -8,7 +8,7 @@ export default function GrainyBackground() {
           position: 'absolute',
           inset: 0,
           background:
-            'radial-gradient(ellipse at 25% 20%, #F5E6D3 0%, #F3DCC9 35%, #ee8770 75%, #cc4730 100%)',
+            'radial-gradient(ellipse at 25% 20%, #f1c48d 0%, #ade7f6 35%, #ed9d8b 75%, #ea563c 100%)',
         }}
       />
       {/* Secondary warm wash */}

@@ -22,7 +22,7 @@ const serif = Instrument_Serif({
 export const metadata: Metadata = {
   title: "Dandy's Wear — Oblečení s duší",
   description:
-    "Dandy's Wear. Malá česká značka. Ručně šité kousky v béžových a cihlových tónech. Objevte kolekci rozmístěnou po galerii.",
+    "Dandy's Wear. Malá česká značka. Vyšívané vzory na oblečení. Objevte kolekci rozmístěnou po galerii.",
   openGraph: {
     title: "Dandy's Wear",
     description: 'Malá česká značka oblečení.',

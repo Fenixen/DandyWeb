@@ -2,7 +2,7 @@
 export function Logo({ className = '' }: { className?: string }) {
   return (
     <svg
-      viewBox="0 0 210 40"
+      viewBox="0 0 162 40"
       className={className}
       aria-label="Dandy's Wear"
       role="img"
@@ -13,22 +13,18 @@ export function Logo({ className = '' }: { className?: string }) {
         y="28"
         fontFamily="Instrument Serif, Georgia, serif"
         fontSize="26"
-        fontStyle="italic"
         fill="currentColor"
       >
         Dandy&apos;s
       </text>
-      <circle cx="104" cy="22" r="2" fill="currentColor" />
       <text
-        x="116"
-        y="26"
-        fontFamily="Inter, sans-serif"
-        fontSize="10"
-        letterSpacing="0.22em"
+        x="100"
+        y="28"
+        fontFamily="Instrument Serif, Georgia, serif"
+        fontSize="26"
         fill="currentColor"
-        fontWeight="500"
       >
-        WEAR
+        Wear
       </text>
     </svg>
   );

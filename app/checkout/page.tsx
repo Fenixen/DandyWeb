@@ -112,13 +112,13 @@ export default function Checkout() {
 
   return (
     <section className="mx-auto max-w-[1000px] px-4 py-8 md:py-12">
-      <h1 className="serif italic text-5xl md:text-6xl text-ink mb-8 px-2">Pokladna</h1>
+      <h1 className="serif text-5xl md:text-6xl text-ink mb-8 px-2">Pokladna</h1>
 
       <div className="grid md:grid-cols-[1fr_380px] gap-6">
         <form onSubmit={submit} className="space-y-5">
           {/* Customer info */}
           <fieldset className="glass rounded-3xl p-6 space-y-4">
-            <legend className="serif italic text-2xl text-ink px-2">Kontaktní údaje</legend>
+            <legend className="serif text-2xl text-ink px-2">Kontaktní údaje</legend>
             <div className="grid sm:grid-cols-2 gap-3">
               <Field label="Jméno a příjmení" required value={form.customerName}
                 onChange={(v) => setForm({ ...form, customerName: v })} />

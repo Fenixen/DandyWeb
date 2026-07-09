@@ -17,7 +17,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
     <div className="relative pb-40">
       {/* Hero image with color overlay */}
       <div className="flex flex-col items-center px-4">
-        <div className="w-full max-w-[720px] h-[60vh] md:h-[68vh] flex items-center justify-center relative">
+        <div className="w-full max-w-[720px] h-[60vh] md:h-[50vh] flex items-center justify-center relative">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             id="product-hero-img"
@@ -38,7 +38,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
             {product.description}
           </div>
           <div className="mt-6 text-xs uppercase tracking-[0.2em] text-ink/50">
-            Skladem · Dodání 2–3 pracovní dny · Zásilkovna
+            Skladem · Dodání 2–2342 pracovní dny · Zásilkovna
           </div>
         </article>
       </div>

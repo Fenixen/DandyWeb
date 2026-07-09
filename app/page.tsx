@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
 import { asset } from '@/lib/basepath';
+import Image from 'next/image'
 
 export const dynamic = 'force-dynamic';
 
@@ -48,14 +49,21 @@ export default async function Home() {
         })}
 
         {/* Subtle center editorial marker */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 pointer-events-none flex items-center justify-center"
-        >
-          <div className="serif italic text-ink/15 text-[clamp(80px,14vw,220px)] leading-none select-none">
-            Dandy's Wear
-          </div>
+      {/* FIXNÍ LOGO NA STŘEDU POZADÍ */}
+      <div 
+        className="fixed inset-0 flex justify-center items-center pointer-events-none -z-9" 
+        aria-hidden="true"
+      >
+        <div className="relative w-[500px] h-[200px] opacity-20"> {/* Tady upravuješ opacity a velikost */}
+          <Image 
+            src="/wallpapers/LogoDandyCerne.png" 
+            alt="Dandy's Wear Background Logo"
+            fill
+            priority
+            className="object-contain"
+          />
         </div>
+      </div>
       </section>
 
       {/* Mobile: masonry-ish vertical flow — still no titles/prices */}
