@@ -6,7 +6,7 @@ import clsx from 'clsx';
 const faqs = [
   {
     q: 'Jak dlouho trvá doručení?',
-    a: 'Obvykle 2–6 pracovních dnů. Balíky odesíláme ihned po vyšití výšivky a zkompletování balíčku.',
+    a: 'Jelikož produkty nedržíme na skladě, tak doprava bývá něco málo přes týden.',
   },
   {
     q: 'Mohu zboží vrátit nebo vyměnit?',
@@ -14,11 +14,11 @@ const faqs = [
   },
   {
     q: 'Jak si mám vybrat velikost?',
-    a: 'Střihy jsou volnější a proto doporučujeme zůstat u své obvyklé velikosti. Tabulka velikostí je u každého produktu.',
+    a: 'U každého produktu najdete velikostní tabulku. Pokud si nejste jistí, napište nám, rádi poradíme.',
   },
   {
     q: 'Z čeho je oblečení vyrobeno?',
-    a: 'Materiál produktu je vždy uvedeno pod produktem. Nejčastěji se jedná o bavlnu.',
+    a: 'Informace o složení najdete vždy u konkrétního produktu.',
   },
   {
     q: 'Jak se o věci starat?',
